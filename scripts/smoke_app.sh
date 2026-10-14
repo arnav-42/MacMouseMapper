@@ -13,6 +13,28 @@ for image in accessibility-request.png accessibility-toggle.png; do
     echo "Decoded packaged resource: $image"
 done
 
+icon_path="$APP_DIR/Contents/Resources/MacMouseMapper.icns"
+[[ -s "$icon_path" ]] || { echo "Missing packaged app icon: $icon_path" >&2; exit 1; }
+icon_decode_root="$(mktemp -d)"
+iconset_path="$icon_decode_root/MacMouseMapper.iconset"
+/usr/bin/iconutil -c iconset "$icon_path" -o "$iconset_path"
+for representation in icon_16x16.png icon_16x16@2x.png icon_512x512.png icon_512x512@2x.png; do
+    [[ -s "$iconset_path/$representation" ]] || {
+        echo "App icon is missing representation: $representation" >&2
+        rm -rf "$icon_decode_root"
+        exit 1
+    }
+done
+/usr/bin/sips -g pixelWidth -g pixelHeight "$iconset_path/icon_512x512@2x.png" >/dev/null
+icon_reference="$(/usr/bin/plutil -extract CFBundleIconFile raw -o - "$APP_DIR/Contents/Info.plist")"
+[[ "$icon_reference" == "MacMouseMapper.icns" ]] || {
+    echo "CFBundleIconFile does not reference MacMouseMapper.icns: $icon_reference" >&2
+    rm -rf "$icon_decode_root"
+    exit 1
+}
+rm -rf "$icon_decode_root"
+echo "Validated packaged MacMouseMapper.icns representations and Info.plist reference"
+
 existing="$(pgrep -x "$PROCESS_NAME" || true)"
 open -n "$APP_DIR"
 new_pids=""

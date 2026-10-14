@@ -1,10 +1,13 @@
 # MacMouseMapper
 
-MacMouseMapper is a native macOS menu-bar app that remaps mouse side buttons 4 and 5 to keyboard shortcuts, other mouse buttons, or scroll-style gestures. Configure mappings globally or for individual applications while leaving buttons unchanged whenever you choose.
+MacMouseMapper is a native macOS menu-bar app that remaps mouse side buttons 4 and 5 to keyboard shortcuts, other mouse buttons, or scroll-style gestures. Configure one side button at a time: the selected button's default behavior and application-specific behavior stay together, while the other button's saved mappings remain untouched.
 
 ## Features
 
-- Global mappings and per-application overrides
+- Button-focused editing with a segmented Mouse Button 4 / Mouse Button 5 selector and a live vector mouse illustration that highlights only the selected side button
+- Default behavior and application-specific behavior for the selected button in one compact card
+- An illustrated orientation hint plus live **Last side button** detection to identify hardware layouts without assuming every mouse is wired the same way
+- A compact, expandable System Access card that keeps recovery controls and diagnostics available when attention is needed
 - Keyboard shortcuts, mouse-button actions, and scroll-style gestures
 - Pass through any button without remapping it
 - Native menu-bar app with no network or analytics
@@ -28,7 +31,10 @@ MacMouseMapper is a native macOS menu-bar app that remaps mouse side buttons 4 a
 
 ## Usage
 
-- Set global mappings for buttons 4 and 5, or add application overrides for a specific app.
+- Use the **Mouse Button 4 / Mouse Button 5** segmented selector to focus one physical side button. The vector mouse illustration highlights the selected button and labels both physical controls.
+- The card keeps **Default behavior** (global mapping) beside **Application-specific behavior** for the selected button. Add or select an application without changing the other side button; an empty app-specific mapping uses the default behavior.
+- The illustration gives typical rear/lower Button 4 versus front/upper Button 5 guidance, but hardware can vary. Press a side button and check **Last side button** to confirm what macOS reports.
+- **System Access** is compact when capture and generated actions are ready. Expand it with the disclosure chevron for status details, diagnostics, recovery actions, and the Accessibility guide whenever attention is needed.
 - Choose **Pass through** to leave a physical button unchanged.
 - Map a button to a recorded **Keyboard shortcut**, **Another mouse button**, or a **scroll-style gesture** (up, down, left, or right).
 

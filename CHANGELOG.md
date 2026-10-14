@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Redesigned settings around one selected side button at a time, pairing default and application-specific behavior with a dynamic vector mouse illustration, stable application selection, and live button detection guidance.
+- Polished the settings layout with a slimmer integrated mouse illustration, collapsed System Access attention summary, and stable centered controls across mapping states and window widths.
+- Reworked System Access into a compact disclosure card that starts collapsed, keeps an orange attention summary when unhealthy, and may expand automatically when a healthy session later needs attention while retaining user disclosure choices through unrelated rebuilds.
+- Added a packaged MacMouseMapper mouse `.icns` icon and validated its Finder/Spotlight metadata during smoke packaging.
 - First launch is now passive: the settings window appears before permission interaction, silently publishes Accessibility status, and waits for a user-initiated Request Access, Open Settings, or Repair Access action before active-tap/HID work.
 - Trusted launches retain automatic HID diagnostics and capture startup; explicit grant flows still monitor the user action and perform exactly one clean packaged restart with visible settings.
 - Clarified that a live tap with denied HID post access can capture and pass through physical events but cannot generate remapped actions; Repair Access and recovery guidance remain visible until HID access is granted.

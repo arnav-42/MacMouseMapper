@@ -3,8 +3,8 @@ set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$ROOT_DIR"
-APP_VERSION="1.3.0"
-APP_BUILD="4"
+APP_VERSION="1.4.0"
+APP_BUILD="5"
 
 # Prefer an existing stable identity. Never create a certificate or silently
 # treat an ad-hoc signature as a persistent TCC identity.
@@ -42,7 +42,7 @@ cp "$BIN_DIR/MacMouseMapper" "$MACOS_DIR/MacMouseMapper"
 chmod 755 "$MACOS_DIR/MacMouseMapper"
 
 # Keep the SwiftPM resource bundle alongside the executable for Bundle.module,
-# and copy the source PNGs into the main bundle for installed-app lookup.
+# and copy source images plus the checked-in app icon into the main bundle for installed-app lookup.
 resource_bundle=""
 while IFS= read -r candidate; do
     resource_bundle="$candidate"
@@ -54,6 +54,9 @@ fi
 for image in "$ROOT_DIR"/Sources/MacMouseMapper/Resources/*.png; do
     cp "$image" "$RESOURCES_DIR/"
 done
+ICON_SOURCE="$ROOT_DIR/Sources/MacMouseMapper/Resources/MacMouseMapper.icns"
+[[ -f "$ICON_SOURCE" ]] || { echo "Missing packaged app icon source: $ICON_SOURCE" >&2; exit 1; }
+cp "$ICON_SOURCE" "$RESOURCES_DIR/MacMouseMapper.icns"
 
 escaped_identity="$(xml_escape "$SIGNING_IDENTITY_LABEL")"
 cat > "$CONTENTS_DIR/Info.plist" <<PLIST
@@ -71,6 +74,8 @@ cat > "$CONTENTS_DIR/Info.plist" <<PLIST
     <string>6.0</string>
     <key>CFBundleName</key>
     <string>MacMouseMapper</string>
+    <key>CFBundleIconFile</key>
+    <string>MacMouseMapper.icns</string>
     <key>CFBundlePackageType</key>
     <string>APPL</string>
     <key>CFBundleShortVersionString</key>
